@@ -111,7 +111,6 @@ resource "alicloud_instance" "ECS_instance" {
   vswitch_id = "${alicloud_vswitch.vsw.id}"
   password = "${var.ecs_password}"
   internet_max_bandwidth_out = 20
-  user_data = "${file("provisioning.sh")}"
 }
 
 # SLB関連
@@ -139,14 +138,4 @@ resource "alicloud_slb_listener" "http" {
 resource "alicloud_slb_attachment" "default" {
   load_balancer_id = "${alicloud_slb_load_balancer.default.id}"
   instance_ids = ["${alicloud_instance.ECS_instance.id}"]
-}
-
-data "template_file" "user_data" {
-  template = "${file("provisioning.sh")}"
-  vars = {
-    DB_HOST_IP = "${alicloud_db_instance.primary_instance.connection_string}"
-    DB_NAME = "${var.database_name}"
-    DB_USER = "${var.db_user}"
-    DB_PASSWORD = "${var.db_password}"
-  }
 }
