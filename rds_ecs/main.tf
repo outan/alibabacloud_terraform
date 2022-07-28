@@ -30,7 +30,7 @@ resource "alicloud_vswitch" "vsw" {
 }
 
 # RDS関連
-resource "alicloud_db_instance" "db_instance" {
+resource "alicloud_db_instance" "primary_instance" {
   engine = "MySQL"
   engine_version = "5.7"
   instance_type = "rds.mysql.t1.small"
@@ -41,34 +41,34 @@ resource "alicloud_db_instance" "db_instance" {
 
 resource "alicloud_db_database" "default" {
   name = "${var.database_name}"
-  instance_id = "${alicloud_db_instance.db_instance.id}"
+  instance_id = "${alicloud_db_instance.primary_instance.id}"
   character_set = "utf8"
 }
 
 resource "alicloud_db_account" "default" {
-  db_instance_id = "${alicloud_db_instance.db_instance.id}"
+  db_instance_id = "${alicloud_db_instance.primary_instance.id}"
   account_name = "${var.db_user}"
   account_password = "${var.db_password}"
 }
 
 resource "alicloud_db_account_privilege" "default" {
-  instance_id = "${alicloud_db_instance.db_instance.id}"
+  instance_id = "${alicloud_db_instance.primary_instance.id}"
   account_name = "${alicloud_db_account.default.name}"
   db_names = ["${alicloud_db_database.default.name}"]
   privilege = "ReadWrite"
 }
 
 resource "alicloud_db_connection" "default" {
-  instance_id = "${alicloud_db_instance.db_instance.id}"
+  instance_id = "${alicloud_db_instance.primary_instance.id}"
   connection_prefix = "rds-sample"
   port = "3306"
 }
 
-resource "alicloud_db_readonly_instance" "ro_instance" {
-  master_db_instance_id = "${alicloud_db_instance.db_instance.id}"
-  zone_id               = alicloud_db_instance.db_instance.zone_id
-  engine_version        = "${alicloud_db_instance.db_instance.engine_version}"
-  instance_type         = "${alicloud_db_instance.db_instance.instance_type}"
+resource "alicloud_db_readonly_instance" "readonly_instance" {
+  master_db_instance_id = "${alicloud_db_instance.primary_instance.id}"
+  zone_id               = alicloud_db_instance.primary_instance.zone_id
+  engine_version        = "${alicloud_db_instance.primary_instance.engine_version}"
+  instance_type         = "${alicloud_db_instance.primary_instance.instance_type}"
   instance_storage      = "30"
   instance_name         = "${var.database_name}ro"
   vswitch_id            = "${alicloud_vswitch.vsw.id}"
@@ -147,7 +147,7 @@ resource "alicloud_slb_attachment" "default" {
 data "template_file" "user_data" {
   template = "${file("provisioning.sh")}"
   vars = {
-    DB_HOST_IP = "${alicloud_db_instance.db_instance.connection_string}"
+    DB_HOST_IP = "${alicloud_db_instance.primary_instance.connection_string}"
     DB_NAME = "${var.database_name}"
     DB_USER = "${var.db_user}"
     DB_PASSWORD = "${var.db_password}"
