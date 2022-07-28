@@ -74,6 +74,13 @@ resource "alicloud_db_readonly_instance" "readonly_instance" {
   vswitch_id            = "${alicloud_vswitch.vsw.id}"
 }
 
+resource "alicloud_db_read_write_splitting_connection" "splitting_connection" {
+  instance_id       = "${alicloud_db_instance.primary_instance.id}"
+  connection_prefix = "t-con-123"
+  distribution_type = "Standard"
+  depends_on = [alicloud_db_readonly_instance.readonly_instance]
+}
+
 # ECS関連
 resource "alicloud_security_group" "sg" {
   name   = "${var.project_name}_security_group"

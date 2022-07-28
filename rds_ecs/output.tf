@@ -10,3 +10,6 @@ output "rds_primary_host" {
 output "rds_readonly_host" {
   value = "${alicloud_db_readonly_instance.readonly_instance.connection_string}"
 }
+output "rds_read_write_splitting_connection" {
+  value = "${alicloud_db_read_write_splitting_connection.splitting_connection.connection_string}"
+}
