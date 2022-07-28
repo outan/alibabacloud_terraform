@@ -7,3 +7,6 @@ output "slb_ip" {
 output "rds_primary_host" {
   value = "${alicloud_db_instance.db_instance.connection_string}"
 }
+output "rds_readonly_host" {
+  value = "${alicloud_db_readonly_instance.ro_instance.connection_string}"
+}

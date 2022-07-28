@@ -64,6 +64,16 @@ resource "alicloud_db_connection" "default" {
   port = "3306"
 }
 
+resource "alicloud_db_readonly_instance" "ro_instance" {
+  master_db_instance_id = "${alicloud_db_instance.db_instance.id}"
+  zone_id               = alicloud_db_instance.db_instance.zone_id
+  engine_version        = "${alicloud_db_instance.db_instance.engine_version}"
+  instance_type         = "${alicloud_db_instance.db_instance.instance_type}"
+  instance_storage      = "30"
+  instance_name         = "${var.database_name}ro"
+  vswitch_id            = "${alicloud_vswitch.vsw.id}"
+}
+
 # ECS関連
 resource "alicloud_security_group" "sg" {
   name   = "${var.project_name}_security_group"
