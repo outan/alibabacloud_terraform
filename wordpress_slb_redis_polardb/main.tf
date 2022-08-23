@@ -176,7 +176,7 @@ resource "alicloud_instance" "instance" {
 }
 
 ######## SLB
-resource "alicloud_slb" "default" {
+resource "alicloud_slb_load_balancer" "default" {
   load_balancer_name = "wp_slb"
   load_balancer_spec = "slb.s2.medium"
   vswitch_id         = alicloud_vswitch.vswitch_1.id
@@ -185,7 +185,7 @@ resource "alicloud_slb" "default" {
 }
 
 resource "alicloud_slb_listener" "default" {
-  load_balancer_id          = alicloud_slb.default.id
+  load_balancer_id          = alicloud_slb_load_balancer.default.id
   backend_port              = 80
   frontend_port             = 80
   protocol                  = "http"
@@ -211,7 +211,7 @@ resource "alicloud_slb_listener" "default" {
 }
 
 resource "alicloud_slb_backend_server" "default" {
-  load_balancer_id = alicloud_slb.default.id
+  load_balancer_id = alicloud_slb_load_balancer.default.id
 
   backend_servers {
     server_id = alicloud_instance.instance.id
@@ -238,7 +238,7 @@ resource "alicloud_eip" "website_slb_access" {
 
 resource "alicloud_eip_association" "eip_slb" {
   allocation_id = alicloud_eip.website_slb_access.id
-  instance_id   = alicloud_slb.default.id
+  instance_id   = alicloud_slb_load_balancer.default.id
 }
 
 ######### Output: EIP of ECS
