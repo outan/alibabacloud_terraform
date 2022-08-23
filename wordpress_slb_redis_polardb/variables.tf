@@ -1,0 +1,12 @@
+variable "access_key" {}
+variable "secret_key" {}
+variable "region" {}
+variable "zone_1" {}
+variable "zone_2" {}
+variable "project_name" {}
+variable "ecs_password" {}
+variable "redis_account_name" {}
+variable "redis_account_password" {}
+variable "polardb_db_name" {}
+variable "polardb_account_name" {}
+variable "polardb_account_password" {}

@@ -1,0 +1,20 @@
+# This file is maintained automatically by "terraform init".
+# Manual edits may be lost in future updates.
+
+provider "registry.terraform.io/hashicorp/alicloud" {
+  version = "1.181.0"
+  hashes = [
+    "h1:msQiM3sJxAnxdzgOMdUqVkzqhNnLS+h+Wx6+R5GL0+U=",
+    "zh:0a7bc16fc0d3a998879213f38bbc5c245e88e516dc806331e4b5b54905305ab8",
+    "zh:12f83645a792c6fb795720b81f5403ab3361b6201fae491b9d611d23a1e43a05",
+    "zh:1a1f9f38bf1ed5539e78d7266ba47d2736c28088de7925d65b2ca1c915de28d6",
+    "zh:3bc07214e2473d4d824ca8681dd0bfb93cc65844c03835402bd5fc482e643cad",
+    "zh:5872fd558d4812e045d3515f9492f163da0419cf280eec766a66091d0c8f242c",
+    "zh:73a5412404705e4d6bd1bc7312735b1a96241646f18207ed449961a57d70be04",
+    "zh:746a12dbb4198489656fd6756af21dcf80476578ba178d8b6076ad4014438309",
+    "zh:a53fd95873cfe3dfcc4de2cf8317692737501e8c6f81ea08b573270311bac900",
+    "zh:a5910363c3ef36b95ff9aa556375f4319b74358f060b86be5f2261a7ab0ce5e2",
+    "zh:cf719f039859b461c1d35735943674c12c89445c6636da2cd2a39844e87fa0c4",
+    "zh:f4957214961d81e910f51c8b2114c06d6e31c118bed757b067da96e464276b68",
+  ]
+}
