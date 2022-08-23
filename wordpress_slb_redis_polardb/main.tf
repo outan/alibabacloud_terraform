@@ -4,6 +4,8 @@ provider "alicloud" {
   region = "${var.region}"
 }
 
+######## 東京regionのAとB zone両方にアクセスできるoneId
+##### https://dev.to/mrboogiej/what-are-the-region-codes-and-az-codes-of-alibaba-cloud-apsaradb-4bij
 variable "redis_multizone" {
   default = "ap-northeast-1MAZ1(a,b)"
 }
